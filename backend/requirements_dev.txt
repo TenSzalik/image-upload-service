@@ -1,0 +1,7 @@
+Baker
+black
+model-bakery
+pylint
+pylint-django
+pytest
+pytest-django

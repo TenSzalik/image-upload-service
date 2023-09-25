@@ -1,0 +1,9 @@
+django
+django-filter
+djangorestframework
+djangorestframework-simplejwt
+drf-extra-fields
+drf-spectacular
+drf-writable-nested
+Pillow
+psycopg2-binary
