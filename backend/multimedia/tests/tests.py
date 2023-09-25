@@ -29,12 +29,14 @@ def test_upload_basic_and_list(auth_client_basic, change_media_root):
         {
             "id": 1,
             "image_original": None,
-            "image_small": ['http:', '', 'testserver', 'images'],
+            "image_small": ["http:", "", "testserver", "images"],
             "image_medium": None,
             "image_custom": None,
         }
     ]
-    response.json()[0]["image_small"] = response.json()[0].get("image_small").split("/")[:4]
+    response.json()[0]["image_small"] = (
+        response.json()[0].get("image_small").split("/")[:4]
+    )
 
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == expected_data
@@ -63,16 +65,22 @@ def test_upload_premium_and_list(auth_client_premium, change_media_root):
     expected_data = [
         {
             "id": 1,
-            "image_original": ['http:', '', 'testserver', 'images'],
-            "image_small": ['http:', '', 'testserver', 'images'],
-            "image_medium": ['http:', '', 'testserver', 'images'],
+            "image_original": ["http:", "", "testserver", "images"],
+            "image_small": ["http:", "", "testserver", "images"],
+            "image_medium": ["http:", "", "testserver", "images"],
             "image_custom": None,
         }
     ]
-    response.json()[0]["image_original"] = response.json()[0].get("image_original").split("/")[:4]
-    response.json()[0]["image_small"] = response.json()[0].get("image_small").split("/")[:4]
-    response.json()[0]["image_medium"] = response.json()[0].get("image_medium").split("/")[:4]
-    
+    response.json()[0]["image_original"] = (
+        response.json()[0].get("image_original").split("/")[:4]
+    )
+    response.json()[0]["image_small"] = (
+        response.json()[0].get("image_small").split("/")[:4]
+    )
+    response.json()[0]["image_medium"] = (
+        response.json()[0].get("image_medium").split("/")[:4]
+    )
+
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == expected_data
 
@@ -100,16 +108,22 @@ def test_upload_enterprise_and_list(auth_client_enterprise, change_media_root):
     expected_data = [
         {
             "id": 1,
-            "image_original": ['http:', '', 'testserver', 'images'],
-            "image_small": ['http:', '', 'testserver', 'images'],
-            "image_medium": ['http:', '', 'testserver', 'images'],
+            "image_original": ["http:", "", "testserver", "images"],
+            "image_small": ["http:", "", "testserver", "images"],
+            "image_medium": ["http:", "", "testserver", "images"],
             "image_custom": None,
         }
     ]
-    response.json()[0]["image_original"] = response.json()[0].get("image_original").split("/")[:4]
-    response.json()[0]["image_small"] = response.json()[0].get("image_small").split("/")[:4]
-    response.json()[0]["image_medium"] = response.json()[0].get("image_medium").split("/")[:4]
-    
+    response.json()[0]["image_original"] = (
+        response.json()[0].get("image_original").split("/")[:4]
+    )
+    response.json()[0]["image_small"] = (
+        response.json()[0].get("image_small").split("/")[:4]
+    )
+    response.json()[0]["image_medium"] = (
+        response.json()[0].get("image_medium").split("/")[:4]
+    )
+
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == expected_data
 
@@ -137,15 +151,19 @@ def test_upload_custom_and_list(auth_client_custom, change_media_root):
     expected_data = [
         {
             "id": 1,
-            "image_original": ['http:', '', 'testserver', 'images'],
+            "image_original": ["http:", "", "testserver", "images"],
             "image_small": None,
             "image_medium": None,
-            "image_custom": ['http:', '', 'testserver', 'images'],
+            "image_custom": ["http:", "", "testserver", "images"],
         }
     ]
-    response.json()[0]["image_original"] = response.json()[0].get("image_original").split("/")[:4]
-    response.json()[0]["image_custom"] = response.json()[0].get("image_custom").split("/")[:4]
-    
+    response.json()[0]["image_original"] = (
+        response.json()[0].get("image_original").split("/")[:4]
+    )
+    response.json()[0]["image_custom"] = (
+        response.json()[0].get("image_custom").split("/")[:4]
+    )
+
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == expected_data
 
@@ -159,8 +177,8 @@ def test_upload_basic_and_list_unauthorized(not_auth_client, change_media_root):
     tmp_file = SimpleUploadedFile("file.jpg", image_data, content_type="image/jpg")
 
     response = not_auth_client.post(
-            "/api/upload/", {"image": tmp_file}, format="multipart"
-        )
+        "/api/upload/", {"image": tmp_file}, format="multipart"
+    )
     assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     response = not_auth_client.get("/api/upload/")
