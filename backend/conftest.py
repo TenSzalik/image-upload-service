@@ -1,5 +1,7 @@
+import os
 import tempfile
 
+from PIL import Image
 import pytest
 from rest_framework.test import APIClient
 
@@ -77,3 +79,27 @@ def fixture_temp_dir():
     """
     with tempfile.TemporaryDirectory() as tmpdirname:
         yield tmpdirname
+
+
+@pytest.fixture(name="get_image_path")
+def fixture_get_image_path(settings):
+    image_path = os.path.join(settings.BASE_DIR, "example.jpg")
+
+    return image_path
+
+
+@pytest.fixture(name="read_image")
+def read_image(settings):
+    path = os.path.join(settings.BASE_DIR, "example.jpg")
+    with open(path, "rb") as image_file:
+        return image_file.read()
+
+
+@pytest.fixture(name="expiration_link")
+def expiration_link():
+    return baker.make_recipe("expiring_url.expiration")
+
+
+@pytest.fixture(name="multimedia_basic")
+def multimedia_basic():
+    return baker.make_recipe("multimedia.multimedia_basic")
