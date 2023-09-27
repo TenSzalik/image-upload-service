@@ -7,3 +7,5 @@ drf-spectacular
 drf-writable-nested
 Pillow
 psycopg2-binary
+pydantic
+pydantic-settings
