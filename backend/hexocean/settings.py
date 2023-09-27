@@ -14,6 +14,8 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from .keychain import keychain
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-n9@cg3-xhlr2@v51lh=l=7zbo)xkd6!e+wfgf#6z6$d5%g&74s"
+SECRET_KEY = keychain.secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -112,8 +114,12 @@ WSGI_APPLICATION = "hexocean.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": keychain.postgres_username,
+        "USER": keychain.postgres_username,
+        "PASSWORD": keychain.postgres_password,
+        "HOST": keychain.postgres_host,
+        "PORT": keychain.postgres_port,
     }
 }
 
@@ -163,3 +169,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "images")
 MEDIA_URL = "/images/"
+
+ALLOWED_HOSTS = ["*"]
