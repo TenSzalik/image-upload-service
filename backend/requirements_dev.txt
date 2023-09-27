@@ -1,5 +1,6 @@
 Baker
 black
+freezegun
 model-bakery
 pylint
 pylint-django
