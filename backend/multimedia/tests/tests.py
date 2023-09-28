@@ -80,7 +80,9 @@ def test_upload_premium_and_list(auth_client_premium, change_media_root, read_im
 
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
-def test_upload_enterprise_and_list(auth_client_enterprise, change_media_root, read_image):
+def test_upload_enterprise_and_list(
+    auth_client_enterprise, change_media_root, read_image
+):
     tmp_file = SimpleUploadedFile("file.jpg", read_image, content_type="image/jpg")
     response = auth_client_enterprise.post(
         "/api/upload/", {"image": tmp_file}, format="multipart"
@@ -119,7 +121,9 @@ def test_upload_enterprise_and_list(auth_client_enterprise, change_media_root, r
 
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
-def test_upload_enterprise_and_list_png(auth_client_enterprise, change_media_root, read_image_png):
+def test_upload_enterprise_and_list_png(
+    auth_client_enterprise, change_media_root, read_image_png
+):
     tmp_file = SimpleUploadedFile("file.jpg", read_image_png, content_type="image/jpg")
     response = auth_client_enterprise.post(
         "/api/upload/", {"image": tmp_file}, format="multipart"
@@ -194,7 +198,9 @@ def test_upload_custom_and_list(auth_client_custom, change_media_root, read_imag
 
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
-def test_upload_basic_and_list_unauthorized(not_auth_client, change_media_root, read_image):
+def test_upload_basic_and_list_unauthorized(
+    not_auth_client, change_media_root, read_image
+):
     tmp_file = SimpleUploadedFile("file.jpg", read_image, content_type="image/jpg")
 
     response = not_auth_client.post(
@@ -207,7 +213,14 @@ def test_upload_basic_and_list_unauthorized(not_auth_client, change_media_root, 
 
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
-def test_upload_premium_do_size_is_correct(auth_client_basic, auth_client_premium, auth_client_enterprise, auth_client_custom, change_media_root, read_image):
+def test_upload_premium_do_size_is_correct(
+    auth_client_basic,
+    auth_client_premium,
+    auth_client_enterprise,
+    auth_client_custom,
+    change_media_root,
+    read_image,
+):
     """
     Basic
     """
@@ -288,7 +301,6 @@ def test_upload_premium_do_size_is_correct(auth_client_basic, auth_client_premiu
         img = Image.open(img)
         assert img.size == (511, 300)
 
-
     img_original_name = response.data["image_original"].split("/")[-1]
     img_original_path = os.path.join(change_media_root, img_original_name)
     with open(img_original_path, "rb") as img:
@@ -297,8 +309,12 @@ def test_upload_premium_do_size_is_correct(auth_client_basic, auth_client_premiu
 
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
-def test_upload_premium_do_size_is_correct_too_small_image(auth_client_premium, change_media_root, read_image_too_small):
-    tmp_file = SimpleUploadedFile("file.png", read_image_too_small, content_type="image/png")
+def test_upload_premium_do_size_is_correct_too_small_image(
+    auth_client_premium, change_media_root, read_image_too_small
+):
+    tmp_file = SimpleUploadedFile(
+        "file.png", read_image_too_small, content_type="image/png"
+    )
     response = auth_client_premium.post(
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )

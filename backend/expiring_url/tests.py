@@ -85,7 +85,9 @@ def test_read_expiration_link_expired(
 
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
-def test_read_expiration_link_not_authorized(not_auth_client, expiration_link, read_image):
+def test_read_expiration_link_not_authorized(
+    not_auth_client, expiration_link, read_image
+):
     response = not_auth_client.get(f"/api/expiration/{expiration_link.key}/")
 
     assert response.status_code == status.HTTP_200_OK
@@ -94,7 +96,13 @@ def test_read_expiration_link_not_authorized(not_auth_client, expiration_link, r
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
 def test_create_expiration_link_not_authorized(
-    not_auth_client, auth_client_basic, auth_client_premium, change_media_root, get_image_path, multimedia_basic, auth_client_custom_without_link_expiration_access
+    not_auth_client,
+    auth_client_basic,
+    auth_client_premium,
+    change_media_root,
+    get_image_path,
+    multimedia_basic,
+    auth_client_custom_without_link_expiration_access,
 ):
     image = get_image_path.split("/")[-1]
     data = {"available_to": 300, "image": image}
@@ -107,5 +115,7 @@ def test_create_expiration_link_not_authorized(
     response = auth_client_premium.post("/api/expiration/", data, format="json")
     assert response.status_code == status.HTTP_403_FORBIDDEN
 
-    response = auth_client_custom_without_link_expiration_access.post("/api/expiration/", data, format="json")
+    response = auth_client_custom_without_link_expiration_access.post(
+        "/api/expiration/", data, format="json"
+    )
     assert response.status_code == status.HTTP_403_FORBIDDEN

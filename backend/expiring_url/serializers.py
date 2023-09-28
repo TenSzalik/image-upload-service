@@ -16,7 +16,7 @@ class ExpirationLinkCreateSerializer(ModelSerializer):
 
     def validate(self, data):
         if data["available_to"] > 30_000 or data["available_to"] < 300:
-            raise ValidationError("Error bep bop :(") # do poprawy
+            raise ValidationError("Error bep bop :(")  # do poprawy
 
         result = Multimedia.objects.filter(
             Q(image_original__exact=data["image"])

@@ -35,7 +35,9 @@ class UploadViewSet(ViewSet):
         image_format = image.content_type.split("/")[-1]
 
         if image_format not in ("jpg", "jpeg", "png"):
-            return Response({"detail": "Bad image format"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"detail": "Bad image format"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         data = ImageSaveData(
             image=image,

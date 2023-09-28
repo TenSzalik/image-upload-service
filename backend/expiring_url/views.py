@@ -16,7 +16,6 @@ class ExpirationViewSet(ViewSet):
         if self.action in ("create"):
             return ExpirationLinkCreateSerializer
         return super().get_serializer_class()
-    
 
     def retrieve(self, request, pk):
         try:

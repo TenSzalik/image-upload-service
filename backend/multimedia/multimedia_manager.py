@@ -40,8 +40,13 @@ class ImageSave:
         height_percent = height / float(img.height)
         width = int((float(img.width) * float(height_percent)))
 
-        if (img.size[0] < height) or (img.size[0] < width) or (img.size[1] < height) or (img.size[1] < width):
-            raise ParseError('Image is too small!')
+        if (
+            (img.size[0] < height)
+            or (img.size[0] < width)
+            or (img.size[1] < height)
+            or (img.size[1] < width)
+        ):
+            raise ParseError("Image is too small!")
 
         img.thumbnail((width, height), PIL.Image.NEAREST)
 
