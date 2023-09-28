@@ -6,14 +6,17 @@ from rest_framework.response import Response
 
 from .serializers import ExpirationLinkCreateSerializer
 from .models import ExpirationLink
+from .permissions import ExpirationCreatePermission
 
 
 class ExpirationViewSet(ViewSet):
+    permission_classes = (ExpirationCreatePermission,)
+
     def get_serializer_class(self):
         if self.action in ("create"):
             return ExpirationLinkCreateSerializer
-
         return super().get_serializer_class()
+    
 
     def retrieve(self, request, pk):
         try:
