@@ -42,4 +42,3 @@ services:
       - db
     stdin_open: true
     tty: true
-    restart: on-failure
