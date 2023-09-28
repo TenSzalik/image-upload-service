@@ -5,10 +5,12 @@ from django.contrib.auth import get_user_model
 from user_profile.models import AccountTier
 
 
-basic_tier = Recipe(AccountTier, name="Basic")
-premium_tier = Recipe(AccountTier, name="Premium")
-enterprise_tier = Recipe(AccountTier, name="Enterprise")
-custom_tier = Recipe(AccountTier, name="Custom")
+basic_tier = Recipe(AccountTier, name="Basic", link_expiration=False, size=[200], original=False)
+premium_tier = Recipe(AccountTier, name="Premium", link_expiration=False, size=[200, 400], original=True)
+enterprise_tier = Recipe(AccountTier, name="Enterprise", link_expiration=True, size=[200, 400], original=True)
+custom_tier = Recipe(AccountTier, name="Custom", link_expiration=True, size=[300], original=True)
+custom_tier_without_link_expiration_access = Recipe(AccountTier, name="Custom", link_expiration=False, size=[300], original=True)
+
 
 custom_basic_user = Recipe(
     get_user_model(),
@@ -36,4 +38,11 @@ custom_custom_user = Recipe(
     username=seq("test_email4@example.com"),
     password=seq("foobarbaz4"),
     tier=foreign_key(custom_tier),
+)
+
+custom_custom_user_without_link_expiration_access = Recipe(
+    get_user_model(),
+    username=seq("test_email4@example.com"),
+    password=seq("foobarbaz4"),
+    tier=foreign_key(custom_tier_without_link_expiration_access),
 )

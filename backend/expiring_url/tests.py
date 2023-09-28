@@ -9,12 +9,24 @@ from rest_framework import status
 
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
-def test_create_expiration_link(
+def test_create_expiration_enterprise_user_link(
     auth_client_enterprise, change_media_root, get_image_path, multimedia_basic
 ):
     image = get_image_path.split("/")[-1]
     data = {"available_to": 300, "image": image}
     response = auth_client_enterprise.post("/api/expiration/", data, format="json")
+
+    assert response.status_code == status.HTTP_201_CREATED
+    assert type(response.data) == uuid.UUID
+
+
+@pytest.mark.django_db(transaction=True, reset_sequences=True)
+def test_create_expiration_custom_user_link(
+    auth_client_custom, change_media_root, get_image_path, multimedia_basic
+):
+    image = get_image_path.split("/")[-1]
+    data = {"available_to": 300, "image": image}
+    response = auth_client_custom.post("/api/expiration/", data, format="json")
 
     assert response.status_code == status.HTTP_201_CREATED
     assert type(response.data) == uuid.UUID
@@ -70,3 +82,30 @@ def test_read_expiration_link_expired(
     response = auth_client_enterprise.get(f"/api/expiration/{expiration_link.key}/")
 
     assert response.status_code == status.HTTP_410_GONE
+
+
+@pytest.mark.django_db(transaction=True, reset_sequences=True)
+def test_read_expiration_link_not_authorized(not_auth_client, expiration_link, read_image):
+    response = not_auth_client.get(f"/api/expiration/{expiration_link.key}/")
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.getvalue() == read_image
+
+
+@pytest.mark.django_db(transaction=True, reset_sequences=True)
+def test_create_expiration_link_not_authorized(
+    not_auth_client, auth_client_basic, auth_client_premium, change_media_root, get_image_path, multimedia_basic, auth_client_custom_without_link_expiration_access
+):
+    image = get_image_path.split("/")[-1]
+    data = {"available_to": 300, "image": image}
+    response = not_auth_client.post("/api/expiration/", data, format="json")
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    response = auth_client_basic.post("/api/expiration/", data, format="json")
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    response = auth_client_premium.post("/api/expiration/", data, format="json")
+    assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    response = auth_client_custom_without_link_expiration_access.post("/api/expiration/", data, format="json")
+    assert response.status_code == status.HTTP_403_FORBIDDEN
