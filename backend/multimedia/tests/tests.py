@@ -115,7 +115,7 @@ def test_upload_enterprise_and_list(
 def test_upload_enterprise_and_list_png(
     auth_client_enterprise, change_media_root, read_image_png
 ):
-    tmp_file = SimpleUploadedFile("file.jpg", read_image_png, content_type="image/jpg")
+    tmp_file = SimpleUploadedFile("file.png", read_image_png, content_type="image/png")
     response = auth_client_enterprise.post(
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )
@@ -217,7 +217,7 @@ def test_upload_premium_do_size_is_correct(
     img_small_path = os.path.join(change_media_root, img_small_name)
     with open(img_small_path, "rb") as img:
         img = Image.open(img)
-        assert img.size == (340, 200)
+        assert img.size == (234, 199)
 
     """
     Premium
@@ -231,19 +231,19 @@ def test_upload_premium_do_size_is_correct(
     img_small_path = os.path.join(change_media_root, img_small_name)
     with open(img_small_path, "rb") as img:
         img = Image.open(img)
-        assert img.size == (340, 200)
+        assert img.size == (234, 199)
 
     img_medium_name = response.data["image_medium"].split("/")[-1]
     img_medium_path = os.path.join(change_media_root, img_medium_name)
     with open(img_medium_path, "rb") as img:
         img = Image.open(img)
-        assert img.size == (681, 400)
+        assert img.size == (469, 400)
 
     img_original_name = response.data["image_original"].split("/")[-1]
     img_original_path = os.path.join(change_media_root, img_original_name)
     with open(img_original_path, "rb") as img:
         img = Image.open(img)
-        assert img.size == (1920, 1127)
+        assert img.size == (1080, 920)
 
     """
     Enterprise
@@ -257,19 +257,19 @@ def test_upload_premium_do_size_is_correct(
     img_small_path = os.path.join(change_media_root, img_small_name)
     with open(img_small_path, "rb") as img:
         img = Image.open(img)
-        assert img.size == (340, 200)
+        assert img.size == (234, 199)
 
     img_medium_name = response.data["image_medium"].split("/")[-1]
     img_medium_path = os.path.join(change_media_root, img_medium_name)
     with open(img_medium_path, "rb") as img:
         img = Image.open(img)
-        assert img.size == (681, 400)
+        assert img.size == (469, 400)
 
     img_original_name = response.data["image_original"].split("/")[-1]
     img_original_path = os.path.join(change_media_root, img_original_name)
     with open(img_original_path, "rb") as img:
         img = Image.open(img)
-        assert img.size == (1920, 1127)
+        assert img.size == (1080, 920)
 
     """
     Custom
@@ -283,13 +283,13 @@ def test_upload_premium_do_size_is_correct(
     img_small_path = os.path.join(change_media_root, img_small_name)
     with open(img_small_path, "rb") as img:
         img = Image.open(img)
-        assert img.size == (511, 300)
+        assert img.size == (352, 300)
 
     img_original_name = response.data["image_original"].split("/")[-1]
     img_original_path = os.path.join(change_media_root, img_original_name)
     with open(img_original_path, "rb") as img:
         img = Image.open(img)
-        assert img.size == (1920, 1127)
+        assert img.size == (1080, 920)
 
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
