@@ -134,9 +134,27 @@ def fixture_get_too_small_image_path(settings):
 
 
 @pytest.fixture(name="read_image")
-def read_image(settings, get_image_path):
+def fixture_read_image(settings, get_image_path):
     """
     Read the example image and return a string of bytes
     """
     with open(get_image_path, "rb") as image_file:
+        return image_file.read()
+
+
+@pytest.fixture(name="read_image_png")
+def fixture_read_image_png(settings, get_image_png_path):
+    """
+    Read the example image and return a string of bytes
+    """
+    with open(get_image_png_path, "rb") as image_file:
+        return image_file.read()
+    
+
+@pytest.fixture(name="read_image_too_small")
+def fixture_read_image_too_small(settings, get_too_small_image_path):
+    """
+    Read the example image and return a string of bytes
+    """
+    with open(get_too_small_image_path, "rb") as image_file:
         return image_file.read()
