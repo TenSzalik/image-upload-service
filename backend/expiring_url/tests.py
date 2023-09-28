@@ -17,7 +17,8 @@ def test_create_expiration_enterprise_user_link(
     response = auth_client_enterprise.post("/api/expiration/", data, format="json")
 
     assert response.status_code == status.HTTP_201_CREATED
-    assert type(response.data) == uuid.UUID
+    assert response.data.split("/")[:3] == ['', 'api', 'expiration']
+    assert isinstance(uuid.UUID(response.data.split("/")[3]), uuid.UUID)
 
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
@@ -29,7 +30,8 @@ def test_create_expiration_custom_user_link(
     response = auth_client_custom.post("/api/expiration/", data, format="json")
 
     assert response.status_code == status.HTTP_201_CREATED
-    assert type(response.data) == uuid.UUID
+    assert response.data.split("/")[:3] == ['', 'api', 'expiration']
+    assert isinstance(uuid.UUID(response.data.split("/")[3]), uuid.UUID)
 
 
 @pytest.mark.django_db(transaction=True, reset_sequences=True)
@@ -80,7 +82,6 @@ def test_read_expiration_link_expired(
     auth_client_enterprise, expiration_link, read_image
 ):
     response = auth_client_enterprise.get(f"/api/expiration/{expiration_link.key}/")
-
     assert response.status_code == status.HTTP_410_GONE
 
 

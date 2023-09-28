@@ -1,3 +1,4 @@
+import os
 from django.conf import settings
 from django.http import HttpResponse
 from rest_framework import status
@@ -45,4 +46,5 @@ class ExpirationViewSet(ViewSet):
             image=request.data.get("image"),
         )
         model.save()
-        return Response(model.key, status=status.HTTP_201_CREATED)
+        expiration_link_to_img = os.path.join("/api/expiration/", model.key.__str__())
+        return Response(expiration_link_to_img, status=status.HTTP_201_CREATED)
