@@ -4,11 +4,11 @@ Go to the `/backend` directory:
 
 - run `docker compose up --build`
 
-- `docker exec -it <container_name> ./manage.py makemigrations`
+superuser: 
 
-- `docker exec -it <container_name> ./manage.py migrate`
-
-- `docker exec -it <container_name> ./manage.py createsuperuser`
+- username: Hexocean2023
+    
+- password: hexfoobarbaz2023
 
 ## Testing
 

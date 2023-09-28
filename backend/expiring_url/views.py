@@ -5,6 +5,8 @@ from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 
+from multimedia.models import Multimedia
+
 from .serializers import ExpirationLinkCreateSerializer
 from .models import ExpirationLink
 from .permissions import ExpirationCreatePermission
@@ -46,5 +48,5 @@ class ExpirationViewSet(ViewSet):
             image=request.data.get("image"),
         )
         model.save()
-        expiration_link_to_img = os.path.join("/api/expiration/", model.key.__str__())
+        expiration_link_to_img = os.path.join("0.0.0.0:8000/api/expiration/", model.key.__str__())
         return Response(expiration_link_to_img, status=status.HTTP_201_CREATED)

@@ -13,7 +13,6 @@ def test_upload_basic_and_list(auth_client_basic, change_media_root, read_image)
     response = auth_client_basic.post(
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )
-    # breakpoint()
     assert response.status_code == status.HTTP_201_CREATED
     assert response.data["id"] is 1
     assert response.data["image_original"] is None
@@ -22,7 +21,6 @@ def test_upload_basic_and_list(auth_client_basic, change_media_root, read_image)
     assert response.data["image_custom"] is None
 
     response = auth_client_basic.get("/api/upload/")
-
     expected_data = [
         {
             "id": 1,
@@ -35,7 +33,6 @@ def test_upload_basic_and_list(auth_client_basic, change_media_root, read_image)
     response.json()[0]["image_small"] = (
         response.json()[0].get("image_small").split("/")[:4]
     )
-
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == expected_data
 
@@ -46,7 +43,6 @@ def test_upload_premium_and_list(auth_client_premium, change_media_root, read_im
     response = auth_client_premium.post(
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )
-
     assert response.status_code == status.HTTP_201_CREATED
     assert response.data["id"] is 1
     assert response.data["image_original"] is not None
@@ -55,7 +51,6 @@ def test_upload_premium_and_list(auth_client_premium, change_media_root, read_im
     assert response.data["image_custom"] is None
 
     response = auth_client_premium.get("/api/upload/")
-
     expected_data = [
         {
             "id": 1,
@@ -74,7 +69,6 @@ def test_upload_premium_and_list(auth_client_premium, change_media_root, read_im
     response.json()[0]["image_medium"] = (
         response.json()[0].get("image_medium").split("/")[:4]
     )
-
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == expected_data
 
@@ -87,7 +81,6 @@ def test_upload_enterprise_and_list(
     response = auth_client_enterprise.post(
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )
-
     assert response.status_code == status.HTTP_201_CREATED
     assert response.data["id"] is 1
     assert response.data["image_original"] is not None
@@ -96,7 +89,6 @@ def test_upload_enterprise_and_list(
     assert response.data["image_custom"] is None
 
     response = auth_client_enterprise.get("/api/upload/")
-
     expected_data = [
         {
             "id": 1,
@@ -115,7 +107,6 @@ def test_upload_enterprise_and_list(
     response.json()[0]["image_medium"] = (
         response.json()[0].get("image_medium").split("/")[:4]
     )
-
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == expected_data
 
@@ -128,7 +119,6 @@ def test_upload_enterprise_and_list_png(
     response = auth_client_enterprise.post(
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )
-
     assert response.status_code == status.HTTP_201_CREATED
     assert response.data["id"] is 1
     assert response.data["image_original"] is not None
@@ -137,7 +127,6 @@ def test_upload_enterprise_and_list_png(
     assert response.data["image_custom"] is None
 
     response = auth_client_enterprise.get("/api/upload/")
-
     expected_data = [
         {
             "id": 1,
@@ -156,7 +145,6 @@ def test_upload_enterprise_and_list_png(
     response.json()[0]["image_medium"] = (
         response.json()[0].get("image_medium").split("/")[:4]
     )
-
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == expected_data
 
@@ -167,7 +155,6 @@ def test_upload_custom_and_list(auth_client_custom, change_media_root, read_imag
     response = auth_client_custom.post(
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )
-
     assert response.status_code == status.HTTP_201_CREATED
     assert response.data["id"] is 1
     assert response.data["image_original"] is not None
@@ -176,7 +163,6 @@ def test_upload_custom_and_list(auth_client_custom, change_media_root, read_imag
     assert response.data["image_custom"] is not None
 
     response = auth_client_custom.get("/api/upload/")
-
     expected_data = [
         {
             "id": 1,
@@ -192,7 +178,6 @@ def test_upload_custom_and_list(auth_client_custom, change_media_root, read_imag
     response.json()[0]["image_custom"] = (
         response.json()[0].get("image_custom").split("/")[:4]
     )
-
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == expected_data
 
@@ -202,7 +187,6 @@ def test_upload_basic_and_list_unauthorized(
     not_auth_client, change_media_root, read_image
 ):
     tmp_file = SimpleUploadedFile("file.jpg", read_image, content_type="image/jpg")
-
     response = not_auth_client.post(
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )

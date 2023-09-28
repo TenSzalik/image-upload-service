@@ -1,8 +1,7 @@
 from django.db.models import Q
-from django.http import Http404
+from rest_framework.exceptions import ParseError, NotFound
 from rest_framework.serializers import (
     ModelSerializer,
-    ValidationError,
 )
 
 from .models import ExpirationLink
@@ -16,7 +15,7 @@ class ExpirationLinkCreateSerializer(ModelSerializer):
 
     def validate(self, data):
         if data["available_to"] > 30_000 or data["available_to"] < 300:
-            raise ValidationError("Error bep bop :(")  # do poprawy
+            raise ParseError("Expiration time is too long or too short")
 
         result = Multimedia.objects.filter(
             Q(image_original__exact=data["image"])
@@ -26,6 +25,6 @@ class ExpirationLinkCreateSerializer(ModelSerializer):
         )
 
         if len(result) == 0:
-            raise Http404("Multimedia not found")
+            raise NotFound("Multimedia not found")
 
         return data

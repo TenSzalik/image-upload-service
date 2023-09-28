@@ -106,6 +106,10 @@ def expiration_link():
 def multimedia_basic():
     return baker.make_recipe("multimedia.multimedia_basic")
 
+"""
+Other
+"""
+
 
 @pytest.fixture(name="change_media_root")
 def fixture_change_media_root(settings, temp_dir):
@@ -131,7 +135,7 @@ def fixture_get_image_path(settings):
     """
     Get path to the tested image jpg
     """
-    image_path = os.path.join(settings.BASE_DIR, "example.jpg")
+    image_path = os.path.join(settings.BASE_DIR, "test_images", "example.jpg")
     return image_path
 
 
@@ -140,7 +144,7 @@ def fixture_get_image_png_path(settings):
     """
     Get path to the tested image png
     """
-    image_path = os.path.join(settings.BASE_DIR, "example.png")
+    image_path = os.path.join(settings.BASE_DIR, "test_images", "example.png")
     return image_path
 
 
@@ -149,7 +153,7 @@ def fixture_get_too_small_image_path(settings):
     """
     Get path to the too small tested image
     """
-    image_path = os.path.join(settings.BASE_DIR, "example_too_small.png")
+    image_path = os.path.join(settings.BASE_DIR, "test_images", "example_too_small.png")
     return image_path
 
 
