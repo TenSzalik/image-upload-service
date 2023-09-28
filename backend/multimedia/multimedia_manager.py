@@ -5,6 +5,7 @@ import PIL
 from PIL import Image
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.contrib.auth import get_user_model
+from rest_framework.exceptions import ParseError
 
 from .models import Multimedia
 
@@ -38,6 +39,10 @@ class ImageSave:
 
         height_percent = height / float(img.height)
         width = int((float(img.width) * float(height_percent)))
+
+        if (img.size[0] < height) or (img.size[0] < width) or (img.size[1] < height) or (img.size[1] < width):
+            raise ParseError('Image is too small!')
+
         img.thumbnail((width, height), PIL.Image.NEAREST)
 
         name = f"{self.data.image_name}-{height}" + self.data.image_format
@@ -52,24 +57,26 @@ class MultimediaModelSave:
         self.tier_settings = {}
 
     def get_data_for_multimedia(self, path_to_file: ImageSave) -> None:
+        sizes = sorted(self.data.owner.tier.size)
+
         match self.data.owner.tier.name:
             case "Basic":
-                self.tier_settings = {"image_small": path_to_file(200)}
+                self.tier_settings = {"image_small": path_to_file(sizes[0])}
             case "Premium":
                 self.tier_settings = {
-                    "image_small": path_to_file(200),
-                    "image_medium": path_to_file(400),
+                    "image_small": path_to_file(sizes[0]),
+                    "image_medium": path_to_file(sizes[1]),
                     "image_original": path_to_file(None),
                 }
             case "Enterprise":
                 self.tier_settings = {
-                    "image_small": path_to_file(200),
-                    "image_medium": path_to_file(400),
+                    "image_small": path_to_file(sizes[0]),
+                    "image_medium": path_to_file(sizes[1]),
                     "image_original": path_to_file(None),
                 }
             case _:
                 self.tier_settings = {
-                    "image_custom": path_to_file(269),
+                    "image_custom": path_to_file(sizes[0]),
                     "image_original": path_to_file(None),
                 }
 
