@@ -13,12 +13,15 @@ from .multimedia_manager import (
     ImageSave,
     ImageSaveData,
 )
-from .serializers import UploadSerializer, MultimediaListSerializer
+from .serializers import MultimediaListSerializer
 
 
 class UploadViewSet(ViewSet):
-    serializer_class = UploadSerializer
     permission_classes = (IsAuthenticated,)
+
+    def get_serializer_class(self):
+        if self.action in ("list"):
+            return MultimediaListSerializer
 
     def list(self, request):
         queryset = Multimedia.objects.filter(owner=request.user.id)
@@ -29,6 +32,10 @@ class UploadViewSet(ViewSet):
 
     def create(self, request):
         image = request.FILES.get("image")
+        image_format = image.content_type.split("/")[-1]
+
+        if image_format not in ("jpg", "jpeg", "png"):
+            return Response({"detail": "Bad image format"}, status=status.HTTP_400_BAD_REQUEST)
 
         data = ImageSaveData(
             image=image,

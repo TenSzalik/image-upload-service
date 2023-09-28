@@ -1,14 +1,6 @@
-from rest_framework.serializers import Serializer, FileField, JSONField, ModelSerializer
+from rest_framework.serializers import ModelSerializer
 
 from .models import Multimedia
-
-
-class UploadSerializer(Serializer):
-    file_uploaded = FileField()
-    expiration = JSONField()
-
-    class Meta:
-        fields = ["image"]
 
 
 class MultimediaListSerializer(ModelSerializer):
