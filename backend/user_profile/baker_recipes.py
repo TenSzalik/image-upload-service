@@ -1,8 +1,8 @@
 from model_bakery import seq
-from .models import AccountTier
 from model_bakery.recipe import Recipe, foreign_key
 from django.contrib.auth import get_user_model
 from user_profile.models import AccountTier
+from .models import AccountTier
 
 
 basic_tier = Recipe(

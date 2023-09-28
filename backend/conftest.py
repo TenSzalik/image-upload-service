@@ -106,6 +106,7 @@ def expiration_link():
 def multimedia_basic():
     return baker.make_recipe("multimedia.multimedia_basic")
 
+
 """
 Other
 """

@@ -17,7 +17,7 @@ def test_create_expiration_enterprise_user_link(
     response = auth_client_enterprise.post("/api/expiration/", data, format="json")
 
     assert response.status_code == status.HTTP_201_CREATED
-    assert response.data.split("/")[:3] == ['0.0.0.0:8000', 'api', 'expiration']
+    assert response.data.split("/")[:3] == ["0.0.0.0:8000", "api", "expiration"]
     assert isinstance(uuid.UUID(response.data.split("/")[-1]), uuid.UUID)
 
 
@@ -30,7 +30,7 @@ def test_create_expiration_custom_user_link(
     response = auth_client_custom.post("/api/expiration/", data, format="json")
 
     assert response.status_code == status.HTTP_201_CREATED
-    assert response.data.split("/")[:3] == ['0.0.0.0:8000', 'api', 'expiration']
+    assert response.data.split("/")[:3] == ["0.0.0.0:8000", "api", "expiration"]
     assert isinstance(uuid.UUID(response.data.split("/")[-1]), uuid.UUID)
 
 

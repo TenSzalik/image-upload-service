@@ -1,11 +1,10 @@
 import os
+
 from django.conf import settings
 from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
-
-from multimedia.models import Multimedia
 
 from .serializers import ExpirationLinkCreateSerializer
 from .models import ExpirationLink
@@ -28,7 +27,7 @@ class ExpirationViewSet(ViewSet):
                 f"There is no image with name {pk}", status=status.HTTP_404_NOT_FOUND
             )
 
-        if queryset.is_link_valid() == False:
+        if queryset.is_link_valid() is False:
             return Response({"detail": "Link expired"}, status=status.HTTP_410_GONE)
 
         path_to_img = queryset.get_path_to_img(settings.MEDIA_ROOT)
@@ -48,5 +47,7 @@ class ExpirationViewSet(ViewSet):
             image=request.data.get("image"),
         )
         model.save()
-        expiration_link_to_img = os.path.join("0.0.0.0:8000/api/expiration/", model.key.__str__())
+        expiration_link_to_img = os.path.join(
+            "0.0.0.0:8000/api/expiration/", str(model.key)
+        )
         return Response(expiration_link_to_img, status=status.HTTP_201_CREATED)

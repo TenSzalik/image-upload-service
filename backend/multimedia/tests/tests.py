@@ -14,7 +14,7 @@ def test_upload_basic_and_list(auth_client_basic, change_media_root, read_image)
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )
     assert response.status_code == status.HTTP_201_CREATED
-    assert response.data["id"] is 1
+    assert response.data["id"] == 1
     assert response.data["image_original"] is None
     assert response.data["image_small"] is not None
     assert response.data["image_medium"] is None
@@ -44,7 +44,7 @@ def test_upload_premium_and_list(auth_client_premium, change_media_root, read_im
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )
     assert response.status_code == status.HTTP_201_CREATED
-    assert response.data["id"] is 1
+    assert response.data["id"] == 1
     assert response.data["image_original"] is not None
     assert response.data["image_small"] is not None
     assert response.data["image_medium"] is not None
@@ -82,7 +82,7 @@ def test_upload_enterprise_and_list(
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )
     assert response.status_code == status.HTTP_201_CREATED
-    assert response.data["id"] is 1
+    assert response.data["id"] == 1
     assert response.data["image_original"] is not None
     assert response.data["image_small"] is not None
     assert response.data["image_medium"] is not None
@@ -120,7 +120,7 @@ def test_upload_enterprise_and_list_png(
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )
     assert response.status_code == status.HTTP_201_CREATED
-    assert response.data["id"] is 1
+    assert response.data["id"] == 1
     assert response.data["image_original"] is not None
     assert response.data["image_small"] is not None
     assert response.data["image_medium"] is not None
@@ -156,7 +156,7 @@ def test_upload_custom_and_list(auth_client_custom, change_media_root, read_imag
         "/api/upload/", {"image": tmp_file}, format="multipart"
     )
     assert response.status_code == status.HTTP_201_CREATED
-    assert response.data["id"] is 1
+    assert response.data["id"] == 1
     assert response.data["image_original"] is not None
     assert response.data["image_small"] is None
     assert response.data["image_medium"] is None

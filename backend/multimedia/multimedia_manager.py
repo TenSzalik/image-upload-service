@@ -31,7 +31,7 @@ class ImageSave:
     def __call__(self, height: int | None = None) -> str:
         img = Image.open(self.data.image)
 
-        if height == None:
+        if height is None:
             name = f"{self.data.image_name}-original" + self.data.image_format
             path = os.path.join(self.data.path, name)
             img.save(fp=path)

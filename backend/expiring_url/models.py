@@ -14,10 +14,7 @@ class ExpirationLink(models.Model):
 
     def is_link_valid(self):
         created_to = self.created_at + timedelta(seconds=self.available_to)
-        if created_to > timezone.now():
-            return True
-        else:
-            return False
+        return created_to > timezone.now()
 
     def get_path_to_img(self, path):
         return os.path.join(path, self.image)

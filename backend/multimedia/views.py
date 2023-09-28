@@ -22,6 +22,7 @@ class UploadViewSet(ViewSet):
     def get_serializer_class(self):
         if self.action in ("list"):
             return MultimediaListSerializer
+        return None
 
     def list(self, request):
         queryset = Multimedia.objects.filter(owner=request.user.id)
@@ -42,7 +43,7 @@ class UploadViewSet(ViewSet):
         data = ImageSaveData(
             image=image,
             path=settings.MEDIA_ROOT,
-            image_name=uuid.uuid4().__str__(),
+            image_name=str(uuid.uuid4()),
             image_format="." + image.content_type.split("/")[-1],
         )
         image_save = ImageSave(data=data)

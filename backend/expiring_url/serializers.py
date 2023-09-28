@@ -4,8 +4,8 @@ from rest_framework.serializers import (
     ModelSerializer,
 )
 
-from .models import ExpirationLink
 from multimedia.models import Multimedia
+from .models import ExpirationLink
 
 
 class ExpirationLinkCreateSerializer(ModelSerializer):
