@@ -130,3 +130,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "images")
 MEDIA_URL = "/images/"
 
 ALLOWED_HOSTS = [keychain.allowed_hosts]
+
+STATIC_URL = "static/"
