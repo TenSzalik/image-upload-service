@@ -25,6 +25,9 @@ class MultimediaModelSaveData:
 
 
 class ImageSave:
+    """
+    The class responsible for saving photo(s) to folder
+    """
     def __init__(self, data: ImageSaveData) -> None:
         self.data = data
 
@@ -57,6 +60,9 @@ class ImageSave:
 
 
 class MultimediaModelSave:
+    """
+    The class responsible for handling the saving to the Multimedia's model
+    """
     def __init__(self, data: MultimediaModelSaveData) -> None:
         self.data = data
         self.tier_settings = {}
