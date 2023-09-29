@@ -25,7 +25,7 @@ services:
       - db
 
   hexocean_service:
-    build: /backend
+    build: .
     container_name: hexocean_service
     volumes:
       - .:/hexocean
