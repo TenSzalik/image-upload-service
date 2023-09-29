@@ -1,8 +1,8 @@
-Baker
-black
-freezegun
-model-bakery
-pylint
-pylint-django
-pytest
-pytest-django
+Baker==1.3
+black==23.9.1
+freezegun==1.2.2
+model-bakery==1.15.0
+pylint==2.17.6
+pylint-django==2.5.3
+pytest==7.4.2
+pytest-django==4.5.2
