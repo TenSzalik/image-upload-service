@@ -60,7 +60,7 @@ curl -X POST -F image=@<image.jpg> -H "Authorization: Bearer <token>" 127.0.0.1:
 
 ### Expiration
 
-Here you can create expiration links from 300 to 30_000 seconds. For the POST endpoint, pass the name of the created image, and you will GET the expiration link. The get endpoint is responsible for displaying the image.
+Here you can create expiration links from 300 to 30_000 seconds. For the POST endpoint, pass the name of the created image, and you will GET the expiration link. The get endpoint is responsible for displaying the image and doesn't require a token.
 
 **POST** `/api/expiration/`
 
