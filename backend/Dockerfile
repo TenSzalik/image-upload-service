@@ -15,6 +15,9 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt && \
     pip install -r requirements_dev.txt
 
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/wait-for-it.sh
+
 CMD [ "python3", "manage.py", "runserver", "0.0.0.0:8000"]
 ENTRYPOINT ["/entrypoint.sh", "development"]
 
