@@ -10,7 +10,7 @@ Navigate to the `/backend` directory:
 
 - run `docker compose up --build`.
 
-In the .env file there are coded environment variables to get the project up and running quickly. You ~~can~~ should change them as you like.
+In the .env file there are hardcoded environment variables to get the project up and running quickly. You ~~can~~ should change them as you like.
 
 ## Endpoints
 
